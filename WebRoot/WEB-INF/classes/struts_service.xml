@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="service" namespace="/" extends="struts-default">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		<!-- 全局结果配置 -->
+		<global-results>
+			<result name="error">/page/fail.jsp</result>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+
+	<!-- 	<action name="Index" class="cn.crm.action.IndexAction" method="showIndex">
+			<result name="success">/index.jsp</result>
+			<result name="input">/add.jsp</result>
+		</action> -->
+
+		<!-- 进入新增服务，先进入此action加载数据 -->
+		<action name="addservice" class="cn.crm.service.action.ServiceAction"
+			method="addServicce">
+			<result name="success">/crm_service/add.jsp</result>
+			<result name="input">/add.jsp</result>
+		</action>
+
+		<!-- 保存新增一条服务 -->
+		<action name="addaction" class="cn.crm.service.action.ServiceAction"
+			method="save">
+			<result name="success" type="redirectAction">addservice</result>
+			<result name="error">/su.jsp</result>
+		</action>
+		<!-- 进入分配服务，跳入此action处理请求 -->
+		<action name="allotservice" class="cn.crm.service.action.ServiceAction"
+			method="allotservice">
+			<result name="success">crm_service/dispatch.jsp</result>
+		</action>
+		<!-- 点击分配权限跳入此请求，成功后跳入上衣个action重新加载数据 -->
+		<action name="allocation" class="cn.crm.service.action.ServiceAction" method="saveAllot">
+			<result name="success" type="redirectAction">allotservice</result>
+			<result name="error">/su.jsp</result>
+		</action>
+		<!-- 删除服务action -->
+		<action name="deleteService" class="cn.crm.service.action.ServiceAction" method="deleteService">
+			<result name="success" type="redirectAction">allotservice</result>
+			<result name="error">/su.jsp</result>
+		</action>
+		
+		<!-- 分配服务进入此Action，查询数据 -->
+		<action name="dealSeivice" class="cn.crm.service.action.ServiceAction" method="dealSeivice">
+			<result name="success">crm_service/deal_list.jsp</result>
+		</action>
+		<!-- 处理服务 -->
+		<action name="dispose" class="cn.crm.service.action.ServiceAction" method="disposeService">
+		<result name="success">crm_service/deal.jsp</result>
+		</action>
+		<!-- 保存处理的结果 -->
+		<action name="saveService" class="cn.crm.service.action.ServiceAction" method="saveService">
+		<result name="success" type="redirectAction">dealSeivice</result>
+		</action>
+		
+		<!-- 服务反馈进入，加载数据 -->
+		<action name="feedService" class="cn.crm.service.action.ServiceAction" method="feedService">
+		<result name="success">crm_service/feedback_list.jsp</result>
+		</action>
+		
+        <!-- 处理服务反馈 -->
+		<action name="feedBake" class="cn.crm.service.action.ServiceAction" method="feedBake">
+		<result name="success">crm_service/feedback.jsp</result>
+		</action>
+		<!-- 保存处理的反馈 -->
+		<action name="feedBakeSave" class="cn.crm.service.action.ServiceAction" method="feedBakeSave">
+		<result name="success" type="redirectAction">feedService</result>
+		</action>
+		<!-- 归档查看 -->
+        <action name="filing" class="cn.crm.service.action.ServiceAction" method="filing">
+        <result name="success">crm_service/file_list.jsp</result>
+        </action>
+        <!-- 查看一条归档服务 -->
+        <action name="fileOne" class="cn.crm.service.action.ServiceAction" method="filingOne">
+        <result name="success">crm_service/file_detail.jsp</result>
+        </action>
+        		
+	</package>
+</struts>    

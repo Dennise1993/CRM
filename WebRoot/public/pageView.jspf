@@ -1,0 +1,35 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<div class="position"> 共${recordCount }条记录&nbsp;每页${pageSize }条&nbsp;第${currentPage}页/共${pageCount }页 
+  <a href="javascript: toPage(1)"  title="首页">&laquo;首页</a>
+  <a href="javascript:toPage(${currentPage==1?(currentPage):currentPage-1 })" title="上一页">&laquo; 上一页</a> 
+
+  <s:iterator begin="beginPageIndex" end="endPageIndex" var="num">
+			<s:if test="#num == currentPage"> <%-- 当前页 --%>
+				<span class="number">${num}</span>
+			</s:if>
+			<s:else> <%-- 非当前页 --%>
+				<a class="number" href="javascript:toPage(${num});">${num}</a>
+			</s:else>
+			<script type="text/javascript">
+				$("#_pn").val("${currentPage}");
+		</script>
+		</s:iterator>
+  <a href="javascript:toPage(${currentPage==pageCount?(pageCount):currentPage+1 })"  title="下一页">下一页&raquo;</a>
+  <a href="javascript:toPage(${ pageCount})" title="末页">末页&raquo;</a> 
+  转到&nbsp;
+<select onchange="toPage(this.value)" id="_pn">
+			<s:iterator begin="1" end="pageCount" var="num">
+				<option value="${num}">${num}</option>
+			</s:iterator>
+		</select>
+  </div>
+<script type="text/javascript">
+	function toPage( pageNum ){		
+		$(document.forms[0]).append("<input type='hidden' name='pageNum' value='" + pageNum +"'>");
+		document.forms[0].submit();
+	}
+</script>
+
+

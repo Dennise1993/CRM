@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="CRMbeta0.3">
+        <wb-resource deploy-path="/" source-path="/WebRoot"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-rept"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-right"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-common"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-customer"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-base"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-service"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-sale"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-top"/>
+        <property name="java-output-path" value="/CRMbeta0.3/WebRoot/WEB-INF/classes"/>
+        <property name="context-root" value="/CRMfinalS"/>
+    </wb-module>
+</project-modules>

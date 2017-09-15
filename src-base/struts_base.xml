@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="Base-Date" extends="struts-default">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局结果配置 -->
+		<global-results>
+			<result name="error">/page/fail.jsp</result>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<action name="base-showDictByIf" class="cn.crm.base.action.DataBaseAction" method="showDictByIf">
+			<result name="success">crm_base/dict.jsp</result>
+		</action>
+		<action name="base-showAddDict" class="cn.crm.base.action.DataBaseAction" method="showDict">
+			<result name="success">crm_base/dict_add.jsp</result>
+		</action>
+		<action name="base-AddDict" class="cn.crm.base.action.DataBaseAction" method="addDict">
+			<result name="success" type="redirectAction">base-showAddDict</result>
+		</action>
+		<action name="base-delDict" class="cn.crm.base.action.DataBaseAction" method="delDict">
+			<result name="success" type="redirectAction">base-showDictByIf</result>
+		</action>
+		<action name="base-showUptDict" class="cn.crm.base.action.DataBaseAction" method="showUptDict">
+			<result name="success">crm_base/dict_edit.jsp</result>
+		</action>
+		
+		<action name="base-uptDict" class="cn.crm.base.action.DataBaseAction" method="uptDict">
+			<result name="success" type="redirectAction">base-showDictByIf</result>
+		</action>
+	</package>
+	
+	<package name="Base-Product" extends="struts-default">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局结果配置 -->
+		<global-results>
+			<result name="error">/page/fail.jsp</result>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<action name="base-showProduct" class="cn.crm.base.action.BaseProductAction" method="showProduct">
+			<result name="success" >crm_base/product.jsp</result>
+		</action>
+	</package>
+	
+	<package name="Base-Storage" extends="struts-default">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<action name="base-showStorage" class="cn.crm.base.action.BaseStorageAction" method="showStorage">
+			<result name="success" >crm_base/stock.jsp</result>
+		</action>
+	</package>
+	
+	
+	
+	
+</struts>    

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="showSal" extends="struts-default">
+
+        <!-- 销售机会管理分页和模糊 -->
+		<action name="showUser" class="cn.crm.sale.action.ChanceDevAction"
+			method="showSalChanceDev">
+			<result name="success">/crm_sale/opp/list.jsp</result>
+		</action>
+		
+		<!-- 指派销售机会 -->
+		<action name="AddPatch" class="cn.crm.sale.action.ChanceDevAction"
+			method="AddPatch">
+			<result name="success">/crm_sale/opp/dispatch.jsp</result>
+		</action>
+		<!-- 保存指派销售机会 -->
+		<action name="ShowPatch" class="cn.crm.sale.action.ChanceDevAction"
+			method="ShowPatch">
+			<result name="success" type="redirectAction">showUser.action</result>
+		</action>
+		<!-- 修改销售机会 -->
+		<action name="AddPlan" class="cn.crm.sale.action.ChanceDevAction"
+			method="AddPlan">
+			<result name="success">/crm_sale/opp/plan.jsp</result>
+		</action>
+		<!-- 保存修改销售机会 -->
+		<action name="AddShowPlan" class="cn.crm.sale.action.ChanceDevAction"
+			method="AddShowPlan">
+			<result name="success">/crm_sale/opp/list.jsp</result>
+		</action>
+
+	</package>
+</struts>    

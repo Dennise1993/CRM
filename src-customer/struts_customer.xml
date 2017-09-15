@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 客户关系模型 -->
+	<package name="index" namespace="/" extends="struts-default">
+		 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<!-- 客户关系模型中的首页显示并分组 -->
+		<action name="ScustomerShow" class="cn.crm.custer.action.ScstCustomerAction"
+			method="customerShow">
+			<result name="cussuccess">/crm_cus/info/list.jsp</result>
+		</action>
+		<!-- 客户关系模型中的模糊查询 -->
+		<action name="ScustomerFaintly" class="cn.crm.custer.action.ScstCustomerAction"
+			method="customerFaintly">
+			<result name="faisuccess">/crm_cus/info/list.jsp</result>
+		</action>
+		<!-- 根据客户id显示一条信息 -->
+		<action name="ScstUpdatomer" class="cn.crm.custer.action.ScstCustomerAction" method="tomerShow">
+		   <result name="tosuccess">/crm_cus/info/edit.jsp</result>
+		</action>
+	  <!-- 保存编辑的信息 -->
+	    <action name="ScstpreserveTomer" class="cn.crm.custer.action.ScstCustomerAction" method="tomerUpda">
+	       <result name="upsuccess" type="redirectAction">
+	          <param name="actionName">ScustomerShow</param>
+	       </result>
+	    </action>
+	  <!-- 删除客户信息 -->
+	    <action name="ScstDeletomer" class="cn.crm.custer.action.ScstCustomerAction"  method="tomerDel">
+	      <result name="delsuccess" type="redirectAction">
+	          <param name="actionName">ScustomerShow</param>
+	       </result>
+	    </action>
+	</package>
+	
+	
+	
+	<!-- 联系人关系模型 -->
+	<package name="link" extends="struts-default" namespace="/">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<!-- 联系人的首页显示 -->
+		<action name="ScuslinkShow" class="cn.crm.custer.action.ScstlinkAction"
+			method="cusLinkShow">
+			<result name="linsuccess">/crm_cus/info/linkman.jsp</result>
+		</action>
+		<!-- 编辑联系人的时候进行显示 -->
+		<action name="Scstoneshow" class="cn.crm.custer.action.ScstlinkAction"
+			method="cstOneShow">
+			<result name="lsuccess">/crm_cus/info/linkman_edit.jsp</result>
+		</action>
+		<!-- 保存联系人信息 将其条件转发到ScuslinkShow的action进行处理 -->
+		<action name="Scstpreserve" class="cn.crm.custer.action.ScstlinkAction"
+			method="preserveLink">
+			<!-- 通过<param/>标签进行传递值到jsp页面上 -->
+			<result name="presuccess" type="redirectAction">
+				<param name="actionName">ScuslinkShow</param>
+				<param name="ast">${ast}</param>
+				<param name="gongname">${gongname}</param>
+			</result>
+		</action>
+		<!-- 删除联系人信息 -->
+		<action name="Scstonedelete" class="cn.crm.custer.action.ScstlinkAction"
+			method="deleteLink">
+			<result name="delsuccess" type="redirectAction">
+				<param name="actionName">ScuslinkShow</param>
+				<param name="ast">${ast}</param>
+				<param name="gongname">${gongname}</param>
+			</result>
+		</action>
+
+		<!-- 点击添加时实现页面跳转 -->
+		<action name="Scstzhuan" class="cn.crm.custer.action.ScstlinkAction"
+			method="zhuanLink">
+			<result name="zhusuccess">/crm_cus/info/linkman_add.jsp</result>
+		</action>
+
+		<!-- 添加一个联系人信息 -->
+		<action name="Scstsavelink" class="cn.crm.custer.action.ScstlinkAction"
+			method="saveLink">
+			<result name="savsuccess" type="redirectAction">
+				<param name="actionName">ScuslinkShow</param>
+				<param name="ast">${ast}</param>
+				<param name="gongname">${gongname}</param>
+			</result>
+		</action>
+	</package>
+
+
+	<!-- 活动类 -->
+	<package name="action" extends="struts-default" namespace="/">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<!-- 活动的首页显示并分页 -->
+		<action name="Scusactivity" class="cn.crm.custer.action.ScstActiveAction"
+			method="sActivity">
+			<result name="actsuccess">/crm_cus/info/contact.jsp</result>
+		</action>
+
+		<!-- 显示一条活动信息 -->
+		<action name="SeditoActive" class="cn.crm.custer.action.ScstActiveAction"
+			method="scstShow">
+			<result name="scsuccess">/crm_cus/info/contact_edit.jsp</result>
+		</action>
+
+		<!-- 编辑一条信息并保存并跳转到活动首页 -->
+		<action name="ScstAcone" class="cn.crm.custer.action.ScstActiveAction"
+			method="scstOne">
+			<result name="onesuccess" type="redirectAction">
+				<param name="actionName">Scusactivity</param>
+				<param name="ast">${ast}</param>
+				<param name="gongname">${gongname}</param>
+			</result>
+		</action>
+		<!-- 删除一条活动信息并跳转到活动首页 -->
+		<action name="SdeleteActive" class="cn.crm.custer.action.ScstActiveAction"
+			method="deleteActive">
+			<result name="delsuccess" type="redirectAction">
+				<param name="actionName">Scusactivity</param>
+				<param name="ast">${ast}</param>
+				<param name="gongname">${gongname}</param>
+			</result>
+		</action>
+
+		<!-- 跳转到活动添加页面 -->
+		<action name="Sadd" class="cn.crm.custer.action.ScstActiveAction"
+			method="scstadd">
+			<result name="adsuccess">/crm_cus/info/contact_add.jsp</result>
+		</action>
+
+		<!-- 保存一条活动信息并跳转到活动首页 -->
+		<action name="Scstaddone" class="cn.crm.custer.action.ScstActiveAction"
+			method="scstAddOne">
+			<result name="savesuccess" type="redirectAction">
+				<param name="actionName">Scusactivity</param>
+				<param name="ast">${ast}</param>
+				<param name="gongname">${gongname}</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- 订单类 -->
+	<package name="order" extends="struts-default" namespace="/">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<!-- 订单首页显并分页 -->
+		<action name="ScusOrder" class="cn.crm.custer.action.ScstOrderAction"
+			method="scusShow">
+			<result name="ordsuccess">/crm_cus/info/order.jsp</result>
+		</action>
+		<!-- 通过订单的编号查看订单的详情 -->
+		<action name="Scstcare" class="cn.crm.custer.action.ScstOrderAction"
+			method="scstcsreShow">
+			<result name="carsccess">/crm_cus/info/order_detail.jsp</result>
+		</action>
+	</package>
+
+	<!-- 客户流失管理 -->
+	<package name="lost" extends="struts-default" namespace="/">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<!-- 客户流失首页显示并分页 -->
+		<action name="ScstLostShow" class="cn.crm.custer.action.ScstLostAction"
+			method="scstLostShow">
+			<result name="lossuccess">/crm_cus/lose/list.jsp</result>
+		</action>
+		<!-- 动态模糊查询并分页显示 -->
+		<action name="ScstQuery" class="cn.crm.custer.action.ScstLostAction"
+			method="scstQuery">
+			<result name="quesuccess">/crm_cus/lose/list.jsp</result>
+		</action>
+		<!-- 确认流失并显示一条信息 -->
+		<action name="ScstSure" class="cn.crm.custer.action.ScstLostAction"
+			method="sureShow">
+			<result name="sursuccess">/crm_cus/lose/sure.jsp</result>
+		</action>
+		<!-- 暂缓流失并显示一条信息 -->
+		<action name="ScstRespite" class="cn.crm.custer.action.ScstLostAction"
+			method="sureShow">
+			<result name="sursuccess">/crm_cus/lose/retard.jsp</result>
+		</action>
+		<!-- 确认信息流失 -->
+		<action name="ScstUpdateLo" class="cn.crm.custer.action.ScstLostAction"
+			method="sureUpdate">
+			<result name="updsuccess" type="redirectAction">
+				<param name="actionName">ScstLostShow</param>
+			</result>
+		</action>
+		<!-- 暂缓信息流失 -->
+		<action name="ScstUpdaDefer" class="cn.crm.custer.action.ScstLostAction"
+			method="deferUpdate">
+			<result name="defsuccess" type="redirectAction">
+				<param name="actionName">ScstLostShow</param>
+			</result>
+		</action>
+
+
+	</package>
+
+
+
+</struts>    

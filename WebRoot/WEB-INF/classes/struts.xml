@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+ <!-- 配置为开发模式 -->
+     <!-- 配置为开发模式 -->
+    <constant name="struts.devMode" value="true"></constant>
+<!--     把拓展名配置为action
+    <constant name="struts.action.extension" value="action"></constant> -->
+    <!-- 配置UI标签 -->
+	<constant name="struts.ui.theme" value="simple" />
+	<!-- 国际化 -->
+	<constant name="struts.custom.i18n.resources" value="message" />
+	
+     <!-- 让OGNL中可以使用静态方法 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	
+	<include file="struts_count.xml"></include>
+	<include file="struts_right.xml"></include>
+	<include file="struts_base.xml"></include>
+	<include file="struts_customer.xml"></include>
+	<include file="struts_service.xml"></include>
+	<include file="struts-sale.xml"></include>
+	<include file="struts_sale_dev.xml"></include>
+	<include file="struts_topuser.xml"></include>
+	
+	
+	<package name="home"  extends="struts-default">	
+	  <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+	</package>
+</struts>    

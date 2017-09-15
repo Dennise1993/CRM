@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	
+	<package name="rept"  extends="struts-default">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局的Result配置 -->
+		 <global-results>
+		 	<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		 </global-results>
+	<!-- 统计报表 -->
+		<action name="contri_*" class="cn.crm.rept.action.ContributionAnalysisAction" method="{1}">		
+			<result name="show">crm_rep/contribution.jsp</result>		
+		</action>
+		<action name="constitute_*" class="cn.crm.rept.action.CustomerLevelAction" method="{1}">		
+			<result name="show">crm_rep/constitute.jsp</result>		
+		</action>
+		<action name="serviceAnalysis_*" class="cn.crm.rept.action.ServicesAnalysisAction" method="{1}">		
+			<result name="show">crm_rep/service.jsp</result>		
+		</action>
+		<action name="lostAnalysis_*" class="cn.crm.rept.action.LostAnalysisAction" method="{1}">		
+			<result name="show">crm_rep/lose.jsp</result>		
+		</action>
+	</package>
+</struts>    

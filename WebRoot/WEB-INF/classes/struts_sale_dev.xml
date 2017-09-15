@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+
+<struts>
+	<package name="Sal-dev" extends="struts-default">
+	 <!-- 声明拦截器 -->
+		 <interceptors>
+		      <interceptor name="checkRights" class="cn.crm.common.util.CheckRightInterceptor"></interceptor>
+		 <!-- 重新定义默认的拦截器栈 -->
+		      <interceptor-stack name="defaultStack">
+		          <interceptor-ref name="checkRights"></interceptor-ref>
+		          <interceptor-ref name="defaultStack"></interceptor-ref>
+		      </interceptor-stack>
+		 </interceptors>
+		 <!-- 全局结果配置 -->
+		<global-results>
+			<result name="error">/page/fail.jsp</result>
+			<result name="loginUI">${pageContext.request.contextPath}/userAction/login.jsp</result>
+			<result name="noPrivilegeError">/NoPrivError.jsp</result>
+		</global-results>
+		<action name="sal-showDev" class="cn.crm.dev.action.DevAction" method="showDev">
+			<result name="success" >crm_sale/dev/list.jsp</result>
+		</action>
+		
+		<action name="dev-showPlan" class="cn.crm.dev.action.DevAction" method="showPlan">
+			<result name="success" >crm_sale/dev/plan.jsp</result>
+		</action>
+		<action name="dev-savePlan" class="cn.crm.dev.action.DevAction" method="savePlan">
+			<result name="success" type="redirectAction" >sal-showDev</result>
+		</action>
+	</package>
+
+</struts>    
